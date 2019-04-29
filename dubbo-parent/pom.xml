@@ -26,7 +26,10 @@
     <!-- 属性定义 -->
     <properties>
         <java.version>1.8</java.version>
+        <!-- 多模块项目所有包统一版本编号; 与上面声明 version 保持一致 -->
         <demo.version>0.0.1-SNAPSHOT</demo.version>
+        <!-- 版本保持与接口定义同步; !!注意更新!! -->
+        <service.version>1.2-SNAPSHOT</service.version>
     </properties>
 
 
@@ -57,7 +60,35 @@
                 <scope>provided</scope>
             </dependency>
 
+            <dependency>
+                <groupId>code.dubbo.forward</groupId>
+                <artifactId>demo.interfaces</artifactId>
+                <version>${service.version}</version>
+            </dependency>
 
+            <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>1.2.54</version>
+            </dependency>
+
+            <!-- 多模块相互依赖管理 -->
+            <dependency>
+                <groupId>dubbo-springboot-demo</groupId>
+                <artifactId>dubbo-dao</artifactId>
+                <version>${demo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dubbo-springboot-demo</groupId>
+                <artifactId>dubbo-manager</artifactId>
+                <version>${demo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dubbo-springboot-demo</groupId>
+                <artifactId>dubbo-common</artifactId>
+                <version>${demo.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

@@ -19,7 +19,6 @@
         <dependency>
             <groupId>dubbo-springboot-demo</groupId>
             <artifactId>dubbo-common</artifactId>
-            <version>${demo.version}</version>
         </dependency>
     </dependencies>
 

@@ -20,7 +20,11 @@
         <dependency>
             <groupId>dubbo-springboot-demo</groupId>
             <artifactId>dubbo-common</artifactId>
-            <version>${demo.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
         </dependency>
     </dependencies>
 
