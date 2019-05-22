@@ -1,10 +1,10 @@
 package code.service.impl;
 
-import bean.UserAddress;
 import com.alibaba.dubbo.config.annotation.Reference;
 import org.springframework.stereotype.Service;
-import service.OrderService;
-import service.UserService;
+import test.beans.UserAddress;
+import test.service.OrderService;
+import test.service.UserService;
 
 import java.util.List;
 

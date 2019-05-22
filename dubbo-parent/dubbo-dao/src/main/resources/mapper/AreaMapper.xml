@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.dao.repository.AreaRepository">
+
+    <resultMap id="SysAreaResultMap" type="com.demo.dao.po.SysAreaPO">
+        <result property="province" column="province"/>
+        <result property="city" column="city"/>
+        <result property="district" column="district"/>
+    </resultMap>
+
+    <select id="getLocationByCodeLv3" parameterType="java.lang.Long" resultMap="SysAreaResultMap">
+        SELECT s1.area_name as 'province',s2.area_name as 'city',s3.area_name as 'district'
+        FROM tb_area s1,tb_area s2,tb_area s3
+        WHERE s1.area_code=s2.area_parent_code
+        AND s2.area_code=s3.area_parent_code
+        AND s3.area_code= #{areaCode}
+    </select>
+
+    <select id="getLocationByCodeLv2" parameterType="java.lang.Long" resultMap="SysAreaResultMap">
+        SELECT t1.area_name as 'city', t2.area_name as 'district'
+        FROM tb_area t1,tb_area t2
+        WHERE t1.area_code = t2.area_parent_code
+        AND t2.area_code = #{areaCode}
+    </select>
+
+    <select id="getAreaCodeById" parameterType="java.lang.Long" resultType="java.lang.Long">
+        SELECT t.area_code from  tb_area t where id = #{id}
+    </select>
+</mapper>

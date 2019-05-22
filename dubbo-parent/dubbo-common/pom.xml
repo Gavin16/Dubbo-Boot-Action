@@ -28,7 +28,12 @@
             <artifactId>fastjson</artifactId>
         </dependency>
 
-        <!-- common 包 -->
+        <dependency>
+            <groupId>code.dubbo.forward</groupId>
+            <artifactId>demo.interfaces</artifactId>
+        </dependency>
+
+        <!-- apache common 包 -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>

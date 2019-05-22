@@ -1,5 +1,7 @@
 package demo.dubbo.service;
 
+import demo.dubbo.common.Result;
+
 /**
  * @Title: ${FILE_NAME}
  * @Package: com.demo.service
@@ -8,6 +10,14 @@ package demo.dubbo.service;
  * @date: 2018/5/19 15:11
  */
 public interface IdcardService {
+
+    /**
+     * 解析身份证号码
+     * @param idcardNO
+     * @return
+     */
+    Result parseIdcard(String idcardNO);
+
     /**
      * 查询区域名称
      * @param areaCode
@@ -40,5 +50,5 @@ public interface IdcardService {
      * 生成一个有效的身份证
      * @return
      */
-    String generateIdcard();
+    Result generateIdcard();
 }

@@ -17,7 +17,7 @@
         <dependency>
             <groupId>code.dubbo.forward</groupId>
             <artifactId>demo.interfaces</artifactId>
-            <version>1.1-SNAPSHOT</version>
+            <version>1.2-SNAPSHOT</version>
         </dependency>
 
         <!-- springboot starter -->

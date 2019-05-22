@@ -1,7 +1,6 @@
 package demo.dubbo.service;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+import demo.dubbo.common.Result;
 import demo.dubbo.dto.request.AddressParam;
 import demo.dubbo.exceptions.ServiceException;
 
@@ -12,7 +11,7 @@ public interface AddressService {
      * @param formatedAddress
      * @return
      */
-    JSONObject parseAddress(String formatedAddress);
+    Result parseAddress(String formatedAddress);
 
 
     /**
@@ -20,6 +19,6 @@ public interface AddressService {
      * @param addressParam
      * @return
      */
-    JSONArray parseAddress(AddressParam addressParam) throws ServiceException;
+    Result parseAddress(AddressParam addressParam) throws ServiceException;
 
 }

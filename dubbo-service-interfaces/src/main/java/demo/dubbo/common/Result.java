@@ -8,13 +8,11 @@ import java.util.Date;
 
 public class Result<T> implements Serializable {
     private static final long serialVersionUID = 1L;
-    private static final Integer SUCCESS = 1;
-    private static final Integer ERROR = 0;
     private String requestId;
-    private Integer status;
+    private Boolean success;
     private Integer business;
-    private String errorCode;
-    private String errorMessage;
+    private String code;
+    private String message;
     private String date;
     private String version;
     private T obj;
@@ -24,7 +22,7 @@ public class Result<T> implements Serializable {
         return JSON.toJSONString(this);
     }
     public Result(boolean success) {
-        this.setSuccess(success);
+        this.success = success;
     }
 
     public static <T> Result<T> success() {
@@ -39,32 +37,45 @@ public class Result<T> implements Serializable {
         return result;
     }
 
-    public static <T> Result<T> error(String errorMessage) {
-        return error(errorMessage, null);
+    public static <T> Result<T> error(String message) {
+        return error(message, null);
     }
 
-    public static <T> Result<T> error(String errorMessage, String errorCode) {
+    public static <T> Result<T> error(String message, String code) {
         Result<T> result = new Result<>(false);
-        result.setErrorMessage(errorMessage);
-        result.setErrorCode(errorCode);
+        result.setMessage(message);
+        result.setCode(code);
         return result;
     }
 
     public Result(String requestId, boolean success) {
         super();
         this.requestId = requestId;
-        this.setSuccess(success);
+        this.success = success;
     }
 
     public boolean isSuccess() {
-        if (null == status) {
+        if (null == success) {
             return false;
         }
-        return status.intValue() == SUCCESS.intValue();
+        return success;
     }
 
-    public void setSuccess(boolean success) {
-        this.status = success ? SUCCESS : ERROR;
+
+    public String getRequestId() {
+        return requestId;
+    }
+
+    public void setRequestId(String requestId) {
+        this.requestId = requestId;
+    }
+
+    public Boolean getSuccess() {
+        return success;
+    }
+
+    public void setSuccess(Boolean success) {
+        this.success = success;
     }
 
     public Integer getBusiness() {
@@ -75,37 +86,20 @@ public class Result<T> implements Serializable {
         this.business = business;
     }
 
-    public T getObj() {
-        return obj;
+    public String getCode() {
+        return code;
     }
 
-    public void setObj(T obj) {
-        this.obj = obj;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public String getErrorCode() {
-        return errorCode;
+    public String getMessage() {
+        return message;
     }
 
-    public void setErrorCode(String errorCode) {
-        this.errorCode = errorCode;
-        setSuccess(false);
-    }
-
-    public String getErrorMessage() {
-        return errorMessage;
-    }
-
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
-    }
-
-    public String getRequestId() {
-        return requestId;
-    }
-
-    public void setRequestId(String requestId) {
-        this.requestId = requestId;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public String getDate() {
@@ -124,4 +118,11 @@ public class Result<T> implements Serializable {
         this.version = version;
     }
 
+    public T getObj() {
+        return obj;
+    }
+
+    public void setObj(T obj) {
+        this.obj = obj;
+    }
 }

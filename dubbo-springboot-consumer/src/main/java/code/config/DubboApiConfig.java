@@ -24,6 +24,7 @@ public class DubboApiConfig {
         registryConfig.setProtocol("zookeeper");
         registryConfig.setCheck(true);
         registryConfig.setClient("curator");
+        registryConfig.setRegister(true);
         return registryConfig;
     }
 
