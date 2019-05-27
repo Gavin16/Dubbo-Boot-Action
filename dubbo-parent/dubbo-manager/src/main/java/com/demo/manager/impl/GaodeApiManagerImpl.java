@@ -35,9 +35,9 @@ public class GaodeApiManagerImpl implements GaodeApiManager {
         String url = managerPropertyConfig.getUrl();
 
         param.put(KEY,appkey);
-        logger.info("GaodeApiManagerImpl----geoEncodeService---高德地理编码接口调用传参为：{}",param);
+        logger.info("高德地理编码接口调用传参为：{}",param);
         String res = HttpUtil.get(url,param);
-        logger.info("GaodeApiManagerImpl----geoEncodeService---高德地理编码接口返回结果：{}",res);
+        logger.info("高德地理编码接口返回结果：{}",res);
         // 判断是否调用异常 是否调用成功
         if(StringUtils.isNotEmpty(res) && isSuccess(res)){
             JSONObject jsonRes = JSON.parseObject(res);

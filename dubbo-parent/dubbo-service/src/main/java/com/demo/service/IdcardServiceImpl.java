@@ -2,7 +2,6 @@ package com.demo.service;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.demo.common.constants.Constants;
-import com.demo.common.enums.IdcardResultEnum;
 import com.demo.common.utils.DateUtil;
 import com.demo.common.utils.DigitUtil;
 import com.demo.common.utils.ResultUtil;
@@ -10,9 +9,12 @@ import com.demo.dao.po.SysAreaPO;
 import com.demo.dao.repository.AreaRepository;
 import demo.dubbo.common.Result;
 import demo.dubbo.dto.response.AreaDTO;
+import demo.dubbo.enums.IdcardResultEnum;
+import demo.dubbo.exceptions.IdcardException;
 import demo.dubbo.service.IdcardService;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,33 +23,34 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
-@Slf4j
 @Service(version = "1.0",owner = "minksy")
 @Component
 public class IdcardServiceImpl implements IdcardService {
+
+    private static final Logger logger = LoggerFactory.getLogger(IdcardServiceImpl.class);
 
     @Autowired
     AreaRepository areaRepository;
 
     @Override
     public Result parseIdcard(String idcard) {
-        log.info("传入参数为：{}", idcard);
+        logger.info("传入参数为：{}", idcard);
 
         // 身份证校验
         if (!checkIdcard(idcard)) {
-            return ResultUtil.error(IdcardResultEnum.ERROR_IDCARD);
+            throw new IdcardException(IdcardResultEnum.ERROR_IDCARD);
         }
 
         // 查询该编号对应地区
         String area = getAreaInfo(idcard);
         if (StringUtils.isEmpty(area)) {
-            return ResultUtil.error(IdcardResultEnum.ERROR_AREACODE);
+            throw new IdcardException(IdcardResultEnum.ERROR_AREACODE);
         }
 
         // 解析生日
         String birthday = getBirthday(idcard);
         if (StringUtils.isEmpty(area)) {
-            return ResultUtil.error(IdcardResultEnum.ERROR_BIRTHDAY);
+            throw new IdcardException(IdcardResultEnum.ERROR_BIRTHDAY);
         }
 
         String gender = getGender(idcard);
@@ -105,7 +108,7 @@ public class IdcardServiceImpl implements IdcardService {
             return sysAreaPO.getCity() + sysAreaPO.getDistrict();
         }
         String res =  province + sysAreaPO.getCity() + sysAreaPO.getDistrict();
-        log.info("地址解析结果为:{}", res);
+        logger.info("地址解析结果为:{}", res);
 
         return res;
     }
@@ -121,11 +124,11 @@ public class IdcardServiceImpl implements IdcardService {
             int month = calTime.get(Calendar.MONTH) + 1;
             int day = calTime.get(Calendar.DAY_OF_MONTH);
             String res =  "" + year + "年" + month + "月" + day + "日";
-            log.info("生日解析结果为:{}", res);
+            logger.info("生日解析结果为:{}", res);
 
             return res;
         } catch (Exception e) {
-            log.error("解析出生日期失败：{}", e);
+            logger.error("解析出生日期失败：{}", e);
         }
         return null;
     }
@@ -134,25 +137,25 @@ public class IdcardServiceImpl implements IdcardService {
     public Boolean checkIdcard(String fullIdcardSeries) {
         if (StringUtils.isEmpty(fullIdcardSeries) ||
                 fullIdcardSeries.length() != Constants.IdcardConstants.STANDARD_IDCARD_LENGTH) {
-            log.error("身份证为空或者长度不为18位");
+            logger.error("身份证为空或者长度不为18位");
             return false;
         }
 
         String numPart = fullIdcardSeries.substring(0, 17);
         if (!DigitUtil.isNumberSeries(numPart)) {
-            log.error("身份证数字部分有非法字符");
+            logger.error("身份证数字部分有非法字符");
             return false;
         }
 
         // 判断出生日期是否合法
         String dateStr = fullIdcardSeries.substring(6, 14);
         if (!DateUtil.isValidGregDate(dateStr)) {
-            log.error("身份证日期不合法");
+            logger.error("身份证日期不合法");
             return false;
         }
 
         if (!DigitUtil.isValidIdCard(fullIdcardSeries)) {
-            log.error("身份证有效性校验失败");
+            logger.error("身份证有效性校验失败");
             return false;
         }
 
@@ -176,7 +179,7 @@ public class IdcardServiceImpl implements IdcardService {
     public Result generateIdcard() {
         // 随机生成地区编号
         // 考虑到目前表中仅包含3749条编号记录,随机生成0-3749的编号作为id查询即可获得地区编号
-        log.info("随机生成身份证号码接口被调用");
+        logger.info("随机生成身份证号码接口被调用");
         boolean repeate = true;
         Random random = new Random();
 
@@ -186,9 +189,9 @@ public class IdcardServiceImpl implements IdcardService {
         while (repeate) {
             // 地址表偏移量为 900000
             id = random.nextInt(3749) + 900001;
-            log.info("随机生成的id为：{}", id);
+            logger.info("随机生成的id为：{}", id);
             Long areaCode = areaRepository.getAreaCodeById(id);
-            log.info("查询id得到areaCode为：{}", areaCode);
+            logger.info("查询id得到areaCode为：{}", areaCode);
 
             if (checkAreaCode(areaCode)) {
                 repeate = false;

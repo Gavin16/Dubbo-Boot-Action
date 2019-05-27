@@ -1,7 +1,7 @@
 package code.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.alibaba.fastjson.JSONObject;
+import demo.dubbo.common.Result;
 import demo.dubbo.dto.request.AddressParam;
 import demo.dubbo.service.AddressService;
 import lombok.extern.slf4j.Slf4j;
@@ -19,10 +19,10 @@ public class AddressController {
     private AddressService addressService;
 
     @PostMapping("parse")
-    public JSONObject parseAddress(@RequestBody AddressParam param){
+    public Result parseAddress(@RequestBody AddressParam param){
         log.info("AddressController---parseAddress---入参：{}",param);
-        JSONObject obj = addressService.parseAddress(param.getAddress());
-        return obj;
+        Result result = addressService.parseAddress(param.getAddress());
+        return result;
     }
 }
 

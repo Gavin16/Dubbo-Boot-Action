@@ -1,24 +1,42 @@
 package demo.dubbo.exceptions;
 
-public class ServiceException extends RuntimeException{
+import java.io.Serializable;
 
-    private String errorCode;
-    private String errorMessage;
+public class ServiceException extends RuntimeException implements Serializable {
 
-    public ServiceException(String errorCode, String errorMessage){
-        this.errorCode = errorCode;
-        this.errorMessage = errorMessage;
+    private String code;
+    private String msg;
+
+    public ServiceException(){}
+
+    public ServiceException(String code ,String msg){
+        super(msg);
+        this.code = code ;
+        this.msg = msg;
     }
 
-    public ServiceException(String msg, Throwable e){
-        super(msg,e);
+    /**
+     * 服务端异常不打印栈信息
+     */
+    @Override
+    public void printStackTrace() {
+        printStackTrace(System.err);
     }
 
-    public String getErrorCode() {
-        return errorCode;
+
+    public String getCode() {
+        return code;
     }
 
-    public String getErrorMessage() {
-        return errorMessage;
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 }

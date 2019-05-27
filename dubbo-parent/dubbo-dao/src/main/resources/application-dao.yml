@@ -20,3 +20,6 @@ spring:
 mybatis:
   mapper-locations:  classpath:mapper/*.xml
   type-aliases-package: com.demo.dao.po
+  # 打印mybatis 执行SQL日志
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

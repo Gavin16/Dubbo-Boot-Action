@@ -7,6 +7,9 @@ import com.alibaba.dubbo.config.RegistryConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ *
+ */
 @Configuration
 public class DubboApiConfig {
 
@@ -40,8 +43,10 @@ public class DubboApiConfig {
     public ConsumerConfig consumerConfig(){
         ConsumerConfig consumerConfig = new ConsumerConfig();
         consumerConfig.setTimeout(3000);
+        // 启动时检查,为true时若引用的服务不可用会阻止spring初始化; 一般项目上线时可以设置为true,研发阶段为false
         consumerConfig.setCheck(false);
         consumerConfig.setRetries(0);
+        consumerConfig.setTimeout(10000);
         return consumerConfig;
     }
 

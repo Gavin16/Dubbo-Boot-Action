@@ -6,10 +6,16 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * Dubbo 配置覆盖顺序
- * (1) -Ddubbo.register.address=zookeeper://127.0.0.1:2181  ==>
- * (2) dubbo.reg
- * (3)
- * (4)
+ *
+ * 配置颗粒度维度来看   : method==>service==> application
+ * 消费端与服务端维度来看: consumer ==> provider
+ * 综合来看: 优先级从高到底
+ *         (1)消费端 method
+ *         (2)服务端 method
+ *         (3)消费端 service
+ *         (4)服务端 method
+ *         (5)消费端 application
+ *         (6)服务端 application
  */
 @Configuration
 public class DubboApiConfig {
@@ -68,7 +74,6 @@ public class DubboApiConfig {
     public ProviderConfig setDubboProviderConfig(){
         ProviderConfig providerConfig = new ProviderConfig();
         providerConfig.setCluster("failsafe");
-
         return providerConfig;
     }
 }
