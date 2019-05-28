@@ -23,3 +23,5 @@ mybatis:
   # 打印mybatis 执行SQL日志
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+    cache-enabled: true
