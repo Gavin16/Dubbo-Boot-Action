@@ -76,4 +76,9 @@ public class Constants {
 		public static final String LEVEL = "level";
 	}
 
+	public static class RedisPrefix{
+
+		public static final String IDCARD = "demo:idcard:";
+	}
+
 }

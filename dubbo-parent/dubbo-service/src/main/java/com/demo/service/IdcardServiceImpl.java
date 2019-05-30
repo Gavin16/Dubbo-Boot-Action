@@ -1,12 +1,15 @@
 package com.demo.service;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.demo.common.constants.Constants;
 import com.demo.common.utils.DateUtil;
 import com.demo.common.utils.DigitUtil;
 import com.demo.common.utils.ResultUtil;
 import com.demo.dao.po.SysAreaPO;
 import com.demo.dao.repository.AreaRepository;
+import com.demo.utils.RedisService;
 import demo.dubbo.common.Result;
 import demo.dubbo.dto.response.AreaDTO;
 import demo.dubbo.enums.IdcardResultEnum;
@@ -30,40 +33,55 @@ public class IdcardServiceImpl implements IdcardService {
     private static final Logger logger = LoggerFactory.getLogger(IdcardServiceImpl.class);
 
     @Autowired
-    AreaRepository areaRepository;
+    private AreaRepository areaRepository;
+
+    @Autowired
+    private RedisService redisService;
 
     @Override
     public Result parseIdcard(String idcard) {
         logger.info("传入参数为：{}", idcard);
+
+        String cacheKey = Constants.RedisPrefix.IDCARD + idcard;
+
+        // 如果redis缓存中存在数据, 则直接调用缓存数据
+        if(redisService.hasKey(cacheKey)){
+            String cache = redisService.get(cacheKey);
+            return ResultUtil.success(JSONObject.parse(cache));
+        }
 
         // 身份证校验
         if (!checkIdcard(idcard)) {
             throw new IdcardException(IdcardResultEnum.ERROR_IDCARD);
         }
 
-        // 查询该编号对应地区
+        // 查询该编号对应地区,解析生日及性别
         String area = getAreaInfo(idcard);
+        String birthday = getBirthday(idcard);
+        String gender = getGender(idcard);
+
         if (StringUtils.isEmpty(area)) {
             throw new IdcardException(IdcardResultEnum.ERROR_AREACODE);
         }
 
-        // 解析生日
-        String birthday = getBirthday(idcard);
-        if (StringUtils.isEmpty(area)) {
+        if (StringUtils.isEmpty(birthday)) {
             throw new IdcardException(IdcardResultEnum.ERROR_BIRTHDAY);
         }
 
-        String gender = getGender(idcard);
-
-        AreaDTO areaDTO = getAreaDto(area, birthday, gender);
+        AreaDTO areaDTO = getAreaDto(cacheKey,area, birthday, gender);
         return ResultUtil.success(areaDTO);
     }
 
-    private AreaDTO getAreaDto(String area, String birthday, String gender) {
+
+    /**
+     * 封装并保存 查询结果
+     */
+    private AreaDTO getAreaDto(String cacheKey, String area, String birthday, String gender) {
         AreaDTO dto = new AreaDTO();
         dto.setAreaName(area);
         dto.setBirthday(birthday);
         dto.setGender(gender);
+        redisService.set(cacheKey, JSON.toJSONString(dto));
         return dto;
     }
 

@@ -11,6 +11,9 @@
     mybatis 二级缓存使用注意：
     (1) 只有那些几乎不怎么需要修改的表使用缓存才能启动提高效率的作用，如数据字典
     (2) 如果在会变动的表中使用缓存 记得在insert ,update,delete标签增加属性  flushCache="true"
+    (3) 如果需要使用另外一个命名空间的缓存 可以添加标签 <cache-ref namespace="com.someone.application.data.SomeMapper"/>
+        这样即使使用缓存的SQL不在 SomeMapper 的命名空间下, 也可以使用该命名空间的缓存
+    关于缓存详细介绍参考：http://www.mybatis.org/mybatis-3/zh/sqlmap-xml.html#cache
  -->
 
 <mapper namespace="com.demo.dao.repository.AreaRepository">
