@@ -57,11 +57,12 @@
 
 
     <!-- INFO 级别的日志单独输出 -->
+    <!--
+        希望打印info级别的日志的文件里面同样也包含info以上级别的日志,因此这里使用 ThresholdFilter
+     -->
     <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>INFO</level>
-            <onMatch>ACCEPT</onMatch>
-            <onMismatch>DENY</onMismatch>
         </filter>
 
         <!-- 时间滚动策略 -->

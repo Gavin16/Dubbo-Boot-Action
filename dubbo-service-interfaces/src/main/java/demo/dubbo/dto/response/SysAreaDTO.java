@@ -1,7 +1,5 @@
 package demo.dubbo.dto.response;
 
-import lombok.Data;
-
 import java.io.Serializable;
 
 /**
@@ -11,7 +9,6 @@ import java.io.Serializable;
  * @author: Minsky
  * @date: 2018/5/19 20:11
  */
-@Data
 public class SysAreaDTO implements Serializable {
     private Integer id;
     private String province;
@@ -57,5 +54,16 @@ public class SysAreaDTO implements Serializable {
 
     public void setDistrictCode(String districtCode) {
         this.districtCode = districtCode;
+    }
+
+    @Override
+    public String toString() {
+        return "SysAreaDTO{" +
+                "id=" + id +
+                ", province='" + province + '\'' +
+                ", city='" + city + '\'' +
+                ", district='" + district + '\'' +
+                ", districtCode='" + districtCode + '\'' +
+                '}';
     }
 }

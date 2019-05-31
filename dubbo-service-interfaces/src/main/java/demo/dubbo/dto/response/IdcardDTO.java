@@ -1,7 +1,5 @@
 package demo.dubbo.dto.response;
 
-import lombok.Data;
-
 import java.io.Serializable;
 import java.util.Date;
 
@@ -12,7 +10,6 @@ import java.util.Date;
  * @author: Minsky
  * @date: 2018/5/19 15:13
  */
-@Data
 public class IdcardDTO implements Serializable {
     private String areaFullName;
 
@@ -42,5 +39,14 @@ public class IdcardDTO implements Serializable {
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
+    }
+
+    @Override
+    public String toString() {
+        return "IdcardDTO{" +
+                "areaFullName='" + areaFullName + '\'' +
+                ", gender='" + gender + '\'' +
+                ", birthday=" + birthday +
+                '}';
     }
 }

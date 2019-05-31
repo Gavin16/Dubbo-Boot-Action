@@ -1,7 +1,5 @@
 package demo.dubbo.dto.request;
 
-import lombok.Data;
-
 import java.io.Serializable;
 
 /**
@@ -9,7 +7,6 @@ import java.io.Serializable;
  * @Date: 2019/1/5 15:06
  * @Description:
  */
-@Data
 public class AddressParam implements Serializable {
 
     private String address;
@@ -18,4 +15,36 @@ public class AddressParam implements Serializable {
 
     private Boolean batch;
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public Boolean getBatch() {
+        return batch;
+    }
+
+    public void setBatch(Boolean batch) {
+        this.batch = batch;
+    }
+
+    @Override
+    public String toString() {
+        return "AddressParam{" +
+                "address='" + address + '\'' +
+                ", city='" + city + '\'' +
+                ", batch=" + batch +
+                '}';
+    }
 }
