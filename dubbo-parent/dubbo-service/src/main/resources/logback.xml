@@ -77,6 +77,12 @@
     </appender>
 
 
+    <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>192.168.0.102:4000</destination>
+        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder"></encoder>
+    </appender>
+
+
 
     <!-- root级别   DEBUG -->
     <root level="INFO">
@@ -85,6 +91,8 @@
         <!-- 文件输出 -->
         <appender-ref ref="ERROR" />
         <appender-ref ref="INFO" />
+        <!-- logstash 收集日志 -->
+        <appender-ref ref="LOGSTASH" />
         <!--
         <appender-ref ref="WARN" />
         <appender-ref ref="DEBUG" />

@@ -5,13 +5,13 @@
     <parent>
         <groupId>dubbo-springboot-demo</groupId>
         <artifactId>dubbo-parent</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.0.2-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <groupId>dubbo-springboot-demo</groupId>
     <artifactId>dubbo-service</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <name>dubbo-service</name>
 
     <properties>
@@ -131,6 +131,14 @@
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
+        </dependency>
+
+        <!-- logback 日志发送到logstash -->
+        <!-- https://mvnrepository.com/artifact/net.logstash.logback/logstash-logback-encoder -->
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+            <version>5.3</version>
         </dependency>
     </dependencies>
 
