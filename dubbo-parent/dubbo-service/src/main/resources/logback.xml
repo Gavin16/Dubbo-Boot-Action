@@ -7,7 +7,7 @@
     <contextName>dubbo-service</contextName>
 
     <!-- 日志文件输出位置 -->
-    <property name="log_dir" value="/app/applogs/producer" />
+    <property name="log_dir" value="/app/applogs/provider" />
 
     <!-- 保存输出日志最大历史天数,超过这个天数会怎样? -->
     <property name="maxDays" value="30"/>
@@ -28,6 +28,7 @@
 
     <!-- ERROR级别的日志单独输出 -->
     <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log_dir}/error/dubbo-error.log</file>
         <!--
             设置过滤器：
                 当日志级别为ERROR时 输出日志,其他的都DENY
@@ -45,7 +46,7 @@
 
         <!-- 时间滚动策略 -->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${log_dir}/error/%d{yyyy-MM-dd}-error-log.log</fileNamePattern>
+            <fileNamePattern>${log_dir}/error/dubbo-error-%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>${maxMonths}</maxHistory>
         </rollingPolicy>
 
@@ -61,13 +62,14 @@
         希望打印info级别的日志的文件里面同样也包含info以上级别的日志,因此这里使用 ThresholdFilter
      -->
     <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log_dir}/info/dubbo-info.log</file>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>INFO</level>
         </filter>
 
         <!-- 时间滚动策略 -->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${log_dir}/info/%d{yyyy-MM-dd}-info-log.log</fileNamePattern>
+            <fileNamePattern>${log_dir}/info/dubbo-info-%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>${maxMonths}</maxHistory>
         </rollingPolicy>
 
@@ -81,7 +83,6 @@
         <destination>192.168.0.102:4000</destination>
         <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder"></encoder>
     </appender>
-
 
 
     <!-- root级别   DEBUG -->
