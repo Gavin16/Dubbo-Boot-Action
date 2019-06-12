@@ -1,0 +1,4 @@
+dubbo:
+  protocol:
+    port: 20887
+

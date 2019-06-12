@@ -26,7 +26,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
-@Service(version = "1.0",owner = "minksy")
+@Service(version = "1.1",owner = "minksy")
 @Component
 public class IdcardServiceImpl implements IdcardService {
 

@@ -1,8 +1,8 @@
 package com.demo.common.utils;
 
 import com.demo.common.enums.IdcardResultEnum;
-import com.demo.common.enums.ResultEnum;
 import demo.dubbo.common.Result;
+import demo.dubbo.enums.ResultEnum;
 
 public class ResultUtil {
 

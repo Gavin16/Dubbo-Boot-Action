@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class IdcardController {
 
-    @Reference(version = "1.0")
+    @Reference(version = "1.1")
     IdcardService idcardService;
 
     @PostMapping("parse")

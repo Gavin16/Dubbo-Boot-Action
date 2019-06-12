@@ -1,7 +1,7 @@
 package demo.dubbo.service;
 
 import demo.dubbo.common.Result;
-import demo.dubbo.dto.request.AddressParam;
+import demo.dubbo.dto.request.AddressDto;
 import demo.dubbo.exceptions.ServiceException;
 
 public interface AddressService {
@@ -16,9 +16,9 @@ public interface AddressService {
 
     /**
      *
-     * @param addressParam
+     * @param addressDto
      * @return
      */
-    Result parseAddress(AddressParam addressParam) throws ServiceException;
+    Result parseAddress(AddressDto addressDto) throws ServiceException;
 
 }

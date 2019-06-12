@@ -10,7 +10,8 @@ package demo.dubbo.enums;
 public enum ResultEnum {
 
     SUCCESS("10000","调用成功"),
-    QUERY_FAILURE("10001","系统调用失败");
+    QUERY_FAILURE("10001","系统调用失败"),
+    VALIDATION_FAILURE("20001","参数检验失败");
 
     private String code;
 

@@ -5,20 +5,23 @@ import com.alibaba.fastjson.JSONObject;
 import com.demo.common.constants.RequestConstants;
 import com.demo.common.constants.ResponseConstants;
 import com.demo.common.utils.ResultUtil;
+import com.demo.common.utils.ValidationUtil;
 import com.demo.manager.impl.GaodeApiManagerImpl;
 import demo.dubbo.common.Result;
-import demo.dubbo.dto.request.AddressParam;
-import demo.dubbo.exceptions.ServiceException;
+import demo.dubbo.dto.request.AddressDto;
+import demo.dubbo.enums.ResultEnum;
 import demo.dubbo.service.AddressService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
-@Service(version = "1.0",owner = "minksy")
+@Service(version = "1.1",owner = "minksy")
 @Component
 public class AddressServiceImpl implements AddressService {
 
@@ -36,18 +39,24 @@ public class AddressServiceImpl implements AddressService {
      */
     @Override
     public Result parseAddress(String s) {
-        AddressParam addressParam = new AddressParam();
-        addressParam.setAddress(s);
+        AddressDto addressDto = new AddressDto();
+        addressDto.setAddress(s);
 
-        Result result = parseAddress(addressParam);
+        Result result = parseAddress(addressDto);
 
         return result;
     }
 
     @Override
-    public Result parseAddress(AddressParam addressParam) throws ServiceException {
+    public Result parseAddress(@NotNull AddressDto dto){
+        // 先对参数做校验,若参数不合法则直接返回
+        String validate = ValidationUtil.validate(dto);
+        if(!StringUtils.isEmpty(validate)){
+            return ResultUtil.error(ResultEnum.VALIDATION_FAILURE.getCode(),validate);
+        }
+
         Map<String,String> param = new HashMap<>();
-        param.put(RequestConstants.GaodeServiceParam.KEY_ADDRESS,addressParam.getAddress());
+        param.put(RequestConstants.GaodeServiceParam.KEY_ADDRESS,dto.getAddress());
         param.put(RequestConstants.GaodeServiceParam.KEY_OUTPUT,VALUE_JSON);
 
         JSONObject res = gaodeApiManager.geoEncodeService(param);

@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
  *         (1)消费端 method
  *         (2)服务端 method
  *         (3)消费端 service
- *         (4)服务端 method
+ *         (4)服务端 service
  *         (5)消费端 application
  *         (6)服务端 application
  */
@@ -76,5 +76,11 @@ public class DubboApiConfig {
         providerConfig.setCluster("failsafe");
         return providerConfig;
     }
+
+    // 不使用 Dubbo 自带的Service注解时, 是否可以通过以下设置暴露服务??
+//    public ServiceConfig setServiceConfig(){
+//        ServiceConfig<Object> serviceConfig = new ServiceConfig<>();
+//        serviceConfig.setRef();
+//    }
 }
 
