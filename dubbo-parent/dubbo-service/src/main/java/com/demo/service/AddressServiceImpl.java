@@ -1,18 +1,14 @@
 package com.demo.service;
 
-import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSONObject;
 import com.demo.common.constants.RequestConstants;
 import com.demo.common.constants.ResponseConstants;
 import com.demo.common.utils.ResultUtil;
-import com.demo.common.utils.ValidationUtil;
 import com.demo.manager.impl.GaodeApiManagerImpl;
 import demo.dubbo.common.Result;
 import demo.dubbo.dto.request.AddressDto;
-import demo.dubbo.enums.ResultEnum;
 import demo.dubbo.service.AddressService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,8 +16,14 @@ import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Service 属性
+ * connections 表示客户建立连接时使用多少tcp连接数
+ *          0  -- 默认值, 表示使用jvm连接
+ *          1  -- 使用独立连接,一个客户端使用一个tcp连接
+ *          N  -- 一个客户端使用N个tcp连接
+ */
 @Slf4j
-@Service(version = "1.1",owner = "minksy")
 @Component
 public class AddressServiceImpl implements AddressService {
 
@@ -50,11 +52,6 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public Result parseAddress(@NotNull AddressDto dto){
         // 先对参数做校验,若参数不合法则直接返回
-        String validate = ValidationUtil.validate(dto);
-        if(!StringUtils.isEmpty(validate)){
-            return ResultUtil.error(ResultEnum.VALIDATION_FAILURE.getCode(),validate);
-        }
-
         Map<String,String> param = new HashMap<>();
         param.put(RequestConstants.GaodeServiceParam.KEY_ADDRESS,dto.getAddress());
         param.put(RequestConstants.GaodeServiceParam.KEY_OUTPUT,VALUE_JSON);

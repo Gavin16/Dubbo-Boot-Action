@@ -17,7 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("address")
 public class AddressController {
 
-    @Reference(version = "1.1",validation = "true")
+    // (1)增加缓存, 在CacheFilter 中，Dubbo会更具URL + methodName + 传参 去判断会否有缓存,
+    //    若不存在缓存则直接走后续调用,存在则以传参作为key 去缓存中取数据
+    // (2)缓存失效策略一般选择 LRU
+    // (3)这里选择的是对provider的某个service进行缓存,还可以对服务端某个方法进行缓存如：
+    // <dubbo:reference interface="com.foo.BarService">
+    //    <dubbo:method name="findBar" cache="lru" />
+    // </dubbo:reference>
+    @Reference(version = "1.1",validation = "true",connections = 1)
     private AddressService addressService;
 
     @PostMapping("parse")

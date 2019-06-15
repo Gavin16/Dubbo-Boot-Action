@@ -27,7 +27,7 @@ public class DubboApiConfig {
     @Bean
     public ApplicationConfig applicationConfig(){
         ApplicationConfig appConfig = new ApplicationConfig();
-        appConfig.setName("dubbo-springboot-demo");
+        appConfig.setName("dubbo-springboot-action");
         return appConfig;
     }
 
@@ -50,6 +50,8 @@ public class DubboApiConfig {
         ProtocolConfig protocolConfig = new ProtocolConfig();
         protocolConfig.setName("dubbo");
         protocolConfig.setPort(20886);
+        // 最大接收的连接数,长连接连接多长时间?什么时候释放
+        protocolConfig.setAccepts(1000);
         return protocolConfig;
     }
 
@@ -67,13 +69,18 @@ public class DubboApiConfig {
 
 
     /**
-     * 失败策略配置
+     * 集群容错策略：
+     *  (1) failOver 默认， 失败后可以发起重试，可用于幂等性操作: 读取，修改 和 删除
+     *  (2) failfast 快速失败，只发起一次调用，失败立即报错。通常用于非幂等性的写操作，比如新增记录
+     *  (3) failsafe 失败安全,出现异常时,直接忽略
+     *  (4) failback 失败后自动恢复,(不知道怎么恢复) 可以定时重发,通常用于消息通知操作
+     *  (5) forking  并行调用多个服务器,只要有一个成功就返回. 通常用于实时性要求较高的读操作
      * @return
      */
     @Bean
     public ProviderConfig setDubboProviderConfig(){
         ProviderConfig providerConfig = new ProviderConfig();
-        providerConfig.setCluster("failsafe");
+        providerConfig.setCluster("failover");
         return providerConfig;
     }
 

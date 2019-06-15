@@ -1,4 +1,5 @@
-dubbo:
-  protocol:
-    port: 20887
-
+# Dubbo 配置文件的优先升级：
+#
+#dubbo:
+#  protocol:
+#    port: 20887

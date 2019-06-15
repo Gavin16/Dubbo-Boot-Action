@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd        http://dubbo.apache.org/schema/dubbo        http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+
+    <!-- ================== 服务的暴露相关配置,建议使用xml配置 ======================== -->
+
+    <!-- 提供方应用信息，用于计算依赖关系 -->
+    <!--<dubbo:application name="dubbo-springboot-action"  />-->
+    <!-- 使用zookeeper注册中心暴露服务地址 -->
+    <!--<dubbo:registry address="zookeeper://192.168.0.102:2181" />-->
+    <!-- 用dubbo协议在 20886 端口暴露服务 -->
+    <!--<dubbo:protocol name="dubbo" port="20886" />-->
+
+
+    <!--
+         声明需要暴露的服务接口
+         不同的服务接口可能配置的版本,容错策略不尽相同；
+         同时服务接口颗粒一般都不会太小,因此接口中的方法可能会有自己的单独配置。
+         
+    -->
+    <dubbo:service version="1.1" interface="demo.dubbo.service.IdcardService" ref="idcardService" cluster="failfast" loadbalance="roundrobin">
+        <!-- parseIdcard 方法如果是failover策略(调用集群中某个节点失败) 还会再重试 retries 次 -->
+        <dubbo:method name="parseIdcard" retries="2" />
+    </dubbo:service>
+
+    <dubbo:service version="1.1" interface="demo.dubbo.service.AddressService" ref="addressService" cluster="failfast" loadbalance="random">
+        <dubbo:method name="parseAddress" />
+    </dubbo:service>
+    <!-- 和本地bean一样实现服务 -->
+    <bean id="idcardService" class="com.demo.service.IdcardServiceImpl" />
+    <bean id="addressService" class="com.demo.service.AddressServiceImpl" />
+</beans>
