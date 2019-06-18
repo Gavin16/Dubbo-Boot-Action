@@ -13,6 +13,14 @@ import java.util.Date;
  * Description:判断身份证中的日期是否是有效日期 
  */
 public class DateUtil {
+
+	/** 单位为ms的场景下一秒钟的取值 */
+	public static final long SECOND = 1000;
+	public static final long MINUTE = 60*SECOND;
+	public static final long HOUR = 60*MINUTE;
+	public static final long DAY = 24*HOUR;
+
+
 	//身份证中的日期有可能是农历也有可能是公历
 	
 	/**

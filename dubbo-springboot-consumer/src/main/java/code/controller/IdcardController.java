@@ -12,16 +12,18 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class IdcardController {
 
-    @Reference(version = "1.1")
+    @Reference(version = "1.3")
     IdcardService idcardService;
 
     @PostMapping("parse")
     public Result parseIdcard(@RequestBody IdcardDto dto){
+        log.info("IdcardController===parseIdcard=== 入参：{}",dto);
         return idcardService.parseIdcard(dto.getIdcard());
     }
 
     @GetMapping("generate")
     public Result getRandomIdcard(){
+        log.info("IdcardController===getRandomIdcard===方法执行");
         return idcardService.generateIdcard();
     }
 

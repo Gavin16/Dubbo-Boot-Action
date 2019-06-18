@@ -70,7 +70,7 @@ public class DubboApiConfig {
 
     /**
      * 集群容错策略：
-     *  (1) failOver 默认， 失败后可以发起重试，可用于幂等性操作: 读取，修改 和 删除
+     *  (1) failover 默认， 失败后可以发起重试，可用于幂等性操作: 读取，修改 和 删除; 一般用于读操作
      *  (2) failfast 快速失败，只发起一次调用，失败立即报错。通常用于非幂等性的写操作，比如新增记录
      *  (3) failsafe 失败安全,出现异常时,直接忽略
      *  (4) failback 失败后自动恢复,(不知道怎么恢复) 可以定时重发,通常用于消息通知操作
@@ -84,10 +84,12 @@ public class DubboApiConfig {
         return providerConfig;
     }
 
+
     // 不使用 Dubbo 自带的Service注解时, 是否可以通过以下设置暴露服务??
 //    public ServiceConfig setServiceConfig(){
 //        ServiceConfig<Object> serviceConfig = new ServiceConfig<>();
 //        serviceConfig.setRef();
 //    }
+
 }
 

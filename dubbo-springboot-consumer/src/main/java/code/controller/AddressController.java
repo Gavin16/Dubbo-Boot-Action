@@ -24,7 +24,7 @@ public class AddressController {
     // <dubbo:reference interface="com.foo.BarService">
     //    <dubbo:method name="findBar" cache="lru" />
     // </dubbo:reference>
-    @Reference(version = "1.1",validation = "true",connections = 1)
+    @Reference(version = "1.3",validation = "true")
     private AddressService addressService;
 
     @PostMapping("parse")

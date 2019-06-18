@@ -5,13 +5,13 @@
     <parent>
         <groupId>dubbo-springboot-demo</groupId>
         <artifactId>dubbo-parent</artifactId>
-        <version>0.0.2-SNAPSHOT</version>
+        <version>0.0.3-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <groupId>dubbo-springboot-demo</groupId>
     <artifactId>dubbo-service</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.3-SNAPSHOT</version>
     <name>dubbo-service</name>
 
     <properties>
@@ -38,12 +38,41 @@
             </exclusions>
         </dependency>
 
+
+
         <!-- dubbo-springboot starter -->
         <dependency>
             <groupId>com.alibaba.boot</groupId>
             <artifactId>dubbo-spring-boot-starter</artifactId>
             <version>${dubbo-boot.version}</version>
+            <!--<exclusions>-->
+                <!--<exclusion>-->
+                    <!--<groupId>org.apache.zookeeper</groupId>-->
+                    <!--<artifactId>zookeeper</artifactId>-->
+                <!--</exclusion>-->
+                <!--<exclusion>-->
+                    <!--<groupId>org.apache.curator</groupId>-->
+                    <!--<artifactId>curator-framework</artifactId>-->
+                <!--</exclusion>-->
+            <!--</exclusions>-->
         </dependency>
+        <!--
+            发现连接zookeeper时报错 ： Will not attempt to authenticate using SASL (unknown error)
+            选用与服务器同版本的 zookeeper3.4.13
+        -->
+        <!--<dependency>-->
+            <!--<groupId>org.apache.zookeeper</groupId>-->
+            <!--<artifactId>zookeeper</artifactId>-->
+            <!--<version>3.4.13</version>-->
+            <!--<type>pom</type>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.apache.curator</groupId>-->
+            <!--<artifactId>curator-framework</artifactId>-->
+            <!--<version>4.1.0</version>-->
+        <!--</dependency>-->
+
+
 
         <!-- lombok -->
         <dependency>
