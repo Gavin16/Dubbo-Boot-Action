@@ -66,7 +66,7 @@ public class RedisService {
     /**
      * 判断key是否存在
      * @param key 键
-     * @return true 存在 false不存在
+     * @return  存在 -- true 否则 false
      */
     public Boolean hasKey(String key){
         Jedis jedis = null;
@@ -81,6 +81,27 @@ public class RedisService {
             }
         }
         return false;
+    }
+
+
+    /**
+     * 判断key是否存在,严格意义上的判断
+     * @param key 键
+     * @return true 存在 false不存在,null 调用失败
+     */
+    public Boolean strictHasKey(String key){
+        Jedis jedis = null;
+        try {
+            jedis = jedisSentinelPool.getResource();
+            return jedis.exists(key);
+        } catch (Exception e) {
+            logger.error("RedisService--strictHasKey--执行异常:{}",e);
+        } finally {
+            if(null != jedis){
+                jedis.close();
+            }
+        }
+        return null;
     }
 
     /**
@@ -197,6 +218,9 @@ public class RedisService {
         }
         return null;
     }
+
+
+    //============================哈希操作=============================
 
     /**
      * 递减
@@ -428,4 +452,108 @@ public class RedisService {
         return null;
     }
 
+
+    //============================集合操作=============================
+
+
+    /**
+     * 向set 中批量添加元素
+     * @param key
+     * @param members
+     * @return 调用成功返回添加元素个数, 异常返回null
+     */
+    public Long sAdd(String key, String... members){
+        Jedis jedis = null;
+        try {
+            jedis = jedisSentinelPool.getResource();
+            return jedis.sadd(key, members);
+        } catch (Exception e) {
+            logger.error("RedisService--setAdd--执行异常:{}", e);
+        }finally {
+            if(null != jedis){
+                jedis.close();
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 从set中随机弹出有一个元素
+     * @param key
+     * @return 调用成功返回弹出的元素,调用失败返回 null
+     */
+    public String sPop(String key){
+        Jedis jedis = null;
+        try {
+            jedis = jedisSentinelPool.getResource();
+            return jedis.spop(key);
+        } catch (Exception e) {
+            logger.error("RedisService--sPop--执行异常:{}", e);
+        }finally {
+            if(null != jedis){
+                jedis.close();
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 统计集合set中的元素个数, 若元素
+     * @param key
+     * @return
+     */
+    public Long scard(String key){
+        Jedis jedis = null;
+        try {
+            jedis = jedisSentinelPool.getResource();
+            return jedis.scard(key);
+        } catch (Exception e) {
+            logger.error("RedisService--scard--执行异常:{}", e);
+        }finally {
+            if(null != jedis){
+                jedis.close();
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 从集合中随机取一个元素
+     * @param key
+     * @return
+     */
+    public String sRandMember(String key){
+        Jedis jedis = null;
+        try {
+            jedis = jedisSentinelPool.getResource();
+            return jedis.srandmember(key);
+        } catch (Exception e) {
+            logger.error("RedisService--sRandMember--执行异常:{}", e);
+        }finally {
+            if(null != jedis){
+                jedis.close();
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 从集合中随机取一个元素
+     * @param key
+     * @return
+     */
+    public Long srem(String key,String ... members){
+        Jedis jedis = null;
+        try {
+            jedis = jedisSentinelPool.getResource();
+            return jedis.srem(key, members);
+        } catch (Exception e) {
+            logger.error("RedisService--srem--执行异常:{}", e);
+        }finally {
+            if(null != jedis){
+                jedis.close();
+            }
+        }
+        return null;
+    }
 }

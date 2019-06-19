@@ -79,6 +79,8 @@ public class Constants {
 	public static class RedisPrefix{
 
 		public static final String IDCARD = "demo:idcard:";
+
+		public static final String QUESTION_ID = "demo:question:id";
 	}
 
 }

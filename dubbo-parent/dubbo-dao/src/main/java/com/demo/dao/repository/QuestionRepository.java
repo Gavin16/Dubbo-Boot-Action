@@ -12,4 +12,7 @@ public interface QuestionRepository {
 
     /** 批量插入面试题 */
     int batchInsert(List<QuestionPO> questionPOS);
+
+    /** 总面试题数量 */
+    int totalRecordsNum();
 }

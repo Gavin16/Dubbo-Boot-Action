@@ -17,6 +17,10 @@
         id,theme,content,degree,source
     </sql>
 
+    <select id="totalRecordsNum" resultType="integer">
+        select count(1) from tb_question;
+    </select>
+
     <!-- 随机获取一条记录, 并推送给kafka -->
     <select id="getById" resultMap="questionResultMap" parameterType="integer">
         select
