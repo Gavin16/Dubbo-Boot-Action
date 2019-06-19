@@ -2,8 +2,11 @@ package code.task;
 
 import code.utils.HttpUtil;
 import com.alibaba.dubbo.common.utils.StringUtils;
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import demo.dubbo.dto.response.QuestionDTO;
+import demo.dubbo.service.QuestionService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,17 +33,28 @@ public class KafkaConsumeTask {
     @Value("${sms.receiver.mobile}")
     private String mobile;
 
+    @Reference(version = "1.0")
+    private QuestionService questionService;
+
     @KafkaListener(topics = "interview-question")
     public void kafkaReceiving(ConsumerRecord<String,String> record){
-        log.info("KafkaConsumeTask===kafkaReceiving====消费kafka消息=========");
         String value = record.value();
+        log.info("KafkaConsumeTask===kafkaReceiving====消费kafka消息=========value:{}",value);
 
         if(StringUtils.isNotEmpty(value)){
             QuestionDTO questionDTO = JSON.parseObject(value, QuestionDTO.class);
             String param = questionDTO.getTheme()+","+questionDTO.getContent()+","+questionDTO.getDegree();
             Map<String,Object> requestParam = getParams(param);
             String post = HttpUtil.post(reqUrl, requestParam);
-            if(null == post){
+            if(StringUtils.isNotEmpty(post)){
+                log.info("短信：{}发送调用结果:{}",value,post);
+                JSONObject obj = JSON.parseObject(post);
+                // 代表短信发送成功
+                if("OK".equals(obj.get("msg"))){
+                    questionService.remSendedIdFromRedisCache(String.valueOf(questionDTO.getId()));
+                }
+
+            }else{
                 log.error("kafka消费后, 短信消息发送失败...");
             }
         }

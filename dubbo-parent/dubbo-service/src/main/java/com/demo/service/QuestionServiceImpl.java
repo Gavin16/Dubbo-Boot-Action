@@ -1,9 +1,11 @@
 package com.demo.service;
 
+import com.demo.common.constants.Constants;
 import com.demo.common.utils.FileUtil;
 import com.demo.common.utils.ResultUtil;
 import com.demo.dao.po.QuestionPO;
 import com.demo.dao.repository.QuestionRepository;
+import com.demo.utils.RedisService;
 import demo.dubbo.common.Result;
 import demo.dubbo.dto.response.QuestionOptionDto;
 import demo.dubbo.service.QuestionService;
@@ -21,6 +23,9 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Autowired
     private QuestionRepository questionRepository;
+
+    @Autowired
+    private RedisService redisService;
 
     @Override
     public Result sendQuestionToKafka(Integer id) {
@@ -57,6 +62,11 @@ public class QuestionServiceImpl implements QuestionService {
         questionRepository.batchInsert(poList);
         // 返回调用结果
         return ResultUtil.success(null);
+    }
+
+    @Override
+    public Long remSendedIdFromRedisCache(String id) {
+        return redisService.srem(Constants.RedisPrefix.QUESTION_ID,id);
     }
 
 

@@ -33,4 +33,10 @@ public interface QuestionService {
      */
     Result importQuestionFromFile(QuestionOptionDto dto);
 
+    /**
+     * 从redis缓存中删除 短信发送过的ID
+     * @param id
+     * @return
+     */
+    Long remSendedIdFromRedisCache(String id);
 }

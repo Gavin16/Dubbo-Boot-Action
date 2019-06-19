@@ -33,7 +33,7 @@ public class KafkaScheduleTask {
     /**
      * 向kafka 推送消息的任务, 每两小时执行一次
      */
-    @Scheduled(fixedRate = 3*DateUtil.HOUR)
+    @Scheduled(fixedRate = 6*DateUtil.HOUR)
     public void sendMessageToKafka(){
 
         log.info("start to execute schedule task...");
@@ -57,7 +57,7 @@ public class KafkaScheduleTask {
         boolean isSuccess = kafkaService.sendMsg(JSON.toJSONString(dto));
         // 若消息推送成功则从集合中删除 id
         if(isSuccess){
-            redisService.srem(Constants.RedisPrefix.QUESTION_ID, String.valueOf(id));
+            log.info("KafkaScheduleTask===kafkaSending===向kafka发送数据成功");
         }
     }
 
