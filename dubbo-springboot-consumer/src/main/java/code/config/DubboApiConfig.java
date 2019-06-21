@@ -22,6 +22,7 @@ public class DubboApiConfig {
     public ApplicationConfig applicationConfig(){
         ApplicationConfig applicationConfig = new ApplicationConfig();
         applicationConfig.setName("dubbo-service_consumer");
+//        applicationConfig.setQosPort(33333);
         return applicationConfig;
     }
 

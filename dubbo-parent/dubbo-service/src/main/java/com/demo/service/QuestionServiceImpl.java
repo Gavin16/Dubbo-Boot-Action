@@ -38,8 +38,8 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Result incrRemindTimes(Integer id) {
-        return null;
+    public Integer incrRemindTimes(Integer id) {
+        return questionRepository.incrRemindTimes(id);
     }
 
 
@@ -74,7 +74,7 @@ public class QuestionServiceImpl implements QuestionService {
 
         if(!StringUtils.isEmpty(line)){
             QuestionPO questionPO = new QuestionPO();
-            String[] elements = line.split("--");
+            String[] elements = line.trim().split("--");
             questionPO.setTheme(elements[0]);
             questionPO.setContent(elements[1]);
             questionPO.setDegree(elements[2]);

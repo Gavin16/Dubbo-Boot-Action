@@ -51,7 +51,10 @@ public class KafkaConsumeTask {
                 JSONObject obj = JSON.parseObject(post);
                 // 代表短信发送成功
                 if("OK".equals(obj.get("msg"))){
+                    // redis清数据 避免重复
                     questionService.remSendedIdFromRedisCache(String.valueOf(questionDTO.getId()));
+                    // 数据库中计数 + 1
+                    questionService.incrRemindTimes(questionDTO.getId());
                 }
 
             }else{

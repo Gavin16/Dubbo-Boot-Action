@@ -24,7 +24,7 @@ public interface QuestionService {
      * @param id
      * @return
      */
-    Result incrRemindTimes(Integer id);
+    Integer incrRemindTimes(Integer id);
 
     /**
      * 从文件中读取面试题导入到数据库; 仅限研发环境使用
