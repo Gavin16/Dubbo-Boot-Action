@@ -4,7 +4,7 @@
        xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
        xsi:schemaLocation="http://www.springframework.org/schema/beans        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd        http://dubbo.apache.org/schema/dubbo        http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
 
-    <!-- ================== 服务的暴露相关配置,建议使用xml配置 ======================== -->
+    <!-- ================== 应用，注册及协议相关的信息使用API方式配置 ======================== -->
 
     <!-- 提供方应用信息，用于计算依赖关系 -->
     <!--<dubbo:application name="dubbo-springboot-action"  />-->
@@ -14,12 +14,15 @@
     <!--<dubbo:protocol name="dubbo" port="20886" />-->
 
 
+    <!-- ================== 服务的暴露相关配置,建议使用xml配置 ======================== -->
     <!--
          声明需要暴露的服务接口
          不同的服务接口可能配置的版本,容错策略不尽相同；
          同时服务接口颗粒一般都不会太小,因此接口中的方法可能会有自己的单独配置。
          
     -->
+    <dubbo:service interface="demo.dubbo.service.LoginService" ref="loginService" version="1.0"/>
+
     <dubbo:service version="1.3" interface="demo.dubbo.service.IdcardService" ref="idcardService" cluster="failfast" loadbalance="roundrobin">
         <!-- parseIdcard 方法如果是failover策略(调用集群中某个节点失败) 还会再重试 retries 次 -->
         <dubbo:method name="parseIdcard" retries="2"  timeout="3000"/>
@@ -37,10 +40,13 @@
     
     <dubbo:service interface="demo.dubbo.service.QuestionService" ref="questionService" version="1.0" >
     </dubbo:service>
-    
+
+    <dubbo:service interface="test.service.UserService" ref="userService" version="1.1"/>
+
     <!-- 和本地bean一样实现服务 -->
     <bean id="idcardService" class="com.demo.service.IdcardServiceImpl" />
     <bean id="addressService" class="com.demo.service.AddressServiceImpl" />
     <bean id="questionService" class="com.demo.service.QuestionServiceImpl" />
-
+    <bean id="loginService" class="com.demo.service.LoginServiceImpl"/>
+    <bean id="userService" class="com.demo.test.UserServiceImpl" />
 </beans>

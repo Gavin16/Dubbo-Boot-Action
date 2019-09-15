@@ -201,6 +201,17 @@
             <version>1.0.2</version>
         </dependency>
 
+
+        <!--
+            使用spring-kafka 连接kafka 服务器
+            这里版本可能由于不兼容,导致启动报错,经测试需要使用较高版本的 spring-kafka 依赖
+        -->
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+            <version>2.2.6.RELEASE</version>
+        </dependency>
+
     </dependencies>
 
     <build>

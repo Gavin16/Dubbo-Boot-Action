@@ -47,7 +47,7 @@ public class KafkaService {
         return false;
     }
 
-    // 向broker 发送消息
+    // 向 interview-question 主题broker 发送消息
     public boolean sendMsg(String value){
         // 默认向 interview-question 主题发送消息
         return sendMsg("interview-question",value);

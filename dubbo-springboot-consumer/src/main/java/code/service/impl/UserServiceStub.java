@@ -1,5 +1,7 @@
 package code.service.impl;
 
+import com.alibaba.dubbo.config.annotation.Service;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 import test.beans.UserAddress;
 import test.service.UserService;
@@ -12,6 +14,7 @@ import java.util.List;
  * @Description:    调用远程之前可以先调用本地的存根代码
  *                  userService 本地存根实现;
  */
+@Slf4j
 public class UserServiceStub implements UserService {
 
     private final UserService userService;
@@ -26,7 +29,7 @@ public class UserServiceStub implements UserService {
     }
 
     public List<UserAddress> getUserAddresses(String userId) {
-        System.out.println("UserServiceStub");
+        log.info("execute in UserServiceStub..");
         if(!StringUtils.isEmpty(userId)){
             return userService.getUserAddresses(userId);
         }

@@ -36,11 +36,13 @@ public class KafkaConsumeTask {
     @Reference(version = "1.0")
     private QuestionService questionService;
 
+    /**
+     * @param record
+     */
     @KafkaListener(topics = "interview-question")
     public void kafkaReceiving(ConsumerRecord<String,String> record){
         String value = record.value();
         log.info("KafkaConsumeTask===kafkaReceiving====消费kafka消息=========value:{}",value);
-
         if(StringUtils.isNotEmpty(value)){
             QuestionDTO questionDTO = JSON.parseObject(value, QuestionDTO.class);
             String param = questionDTO.getTheme()+","+questionDTO.getContent()+","+questionDTO.getDegree();

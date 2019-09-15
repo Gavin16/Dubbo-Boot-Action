@@ -6,8 +6,11 @@ import com.demo.common.constants.Constants;
 import com.demo.common.utils.DateUtil;
 import com.demo.common.utils.DigitUtil;
 import com.demo.common.utils.ResultUtil;
+import com.demo.dao.po.IdcardRecordPO;
 import com.demo.dao.po.SysAreaPO;
 import com.demo.dao.repository.AreaRepository;
+import com.demo.dao.repository.IdcardRepository;
+import com.demo.utils.KafkaService;
 import com.demo.utils.RedisService;
 import demo.dubbo.common.Result;
 import demo.dubbo.dto.response.AreaDTO;
@@ -32,6 +35,9 @@ public class IdcardServiceImpl implements IdcardService {
 
     @Autowired
     private AreaRepository areaRepository;
+
+    @Autowired
+    private KafkaService kafkaService;
 
     @Autowired
     private RedisService redisService;
@@ -195,6 +201,7 @@ public class IdcardServiceImpl implements IdcardService {
     public Result generateIdcard() {
         // 随机生成地区编号
         // 考虑到目前表中仅包含3749条编号记录,随机生成0-3749的编号作为id查询即可获得地区编号
+        long startTm = System.currentTimeMillis();
         logger.info("随机生成身份证号码接口被调用");
         boolean repeate = true;
         Random random = new Random();
@@ -251,6 +258,18 @@ public class IdcardServiceImpl implements IdcardService {
         // 遍历0 - X 让最后的身份证有效化
         int validValue = DigitUtil.getValidResult(numberPart);
         String validBit = (Constants.IdcardConstants.ROMAN_NUM_TEN == validValue) ? "X" : String.valueOf(validValue);
+        String idcard = numberPart + validBit ;
+        // 判断生成的ID是否有效，有效则存数据库
+        if(checkIdcard(idcard)){
+            // 数据发送到kafka服务器， 异步消费将结果写到数据库; 数据包括 调用时间戳， ID号码， 执行耗时
+            long endTm = System.currentTimeMillis();
+            IdcardRecordPO po = new IdcardRecordPO();
+            po.setCardNo(idcard);
+            po.setCreateTm(new Date());
+            po.setCostTm(endTm - startTm);
+            // 向idcard-record 主题发送消息
+            kafkaService.sendMsg("idcard-record",JSON.toJSONString(po));
+        }
 
         // 返回有效身份证号码
         return ResultUtil.success(numberPart + validBit);

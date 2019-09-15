@@ -1,9 +1,6 @@
 package code.config;
 
-import com.alibaba.dubbo.config.ApplicationConfig;
-import com.alibaba.dubbo.config.ConsumerConfig;
-import com.alibaba.dubbo.config.ProtocolConfig;
-import com.alibaba.dubbo.config.RegistryConfig;
+import com.alibaba.dubbo.config.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -41,6 +38,7 @@ public class DubboApiConfig {
     public ProtocolConfig protocolConfig(){
         ProtocolConfig protocolConfig = new ProtocolConfig();
         protocolConfig.setName("dubbo");
+//        protocolConfig.setSerialization("kryo");
         protocolConfig.setPort(20881);
         return protocolConfig;
     }

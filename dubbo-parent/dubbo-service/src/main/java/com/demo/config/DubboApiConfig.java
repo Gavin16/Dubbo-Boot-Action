@@ -49,6 +49,7 @@ public class DubboApiConfig {
     public ProtocolConfig protocolConfig(){
         ProtocolConfig protocolConfig = new ProtocolConfig();
         protocolConfig.setName("dubbo");
+//        protocolConfig.setSerialization("kryo");
         protocolConfig.setPort(20886);
         // 最大接收的连接数,长连接连接多长时间?什么时候释放
         protocolConfig.setAccepts(1000);

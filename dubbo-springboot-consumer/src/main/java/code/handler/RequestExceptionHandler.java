@@ -80,7 +80,6 @@ public class RequestExceptionHandler {
             return ResultUtil.error(idcardException.getCode(), idcardException.getMsg());
         }
 
-
         log.error(writer.getBuffer().toString());
         return ResultUtil.error(ResultEnum.QUERY_FAILURE);
 

@@ -1,0 +1,10 @@
+spring:
+  kafka:
+    consumer:
+      bootstrap-servers: 192.168.0.102:9092,192.168.0.102:9093,192.168.0.102:9094
+      enable-auto-commit: true
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      auto-offset-reset: latest
+      group-id: idcard-record
+      max-poll-records: 1

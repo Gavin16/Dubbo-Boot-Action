@@ -3,6 +3,9 @@ package code;
 import com.alibaba.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ImportResource;
 
 /**
  * @Auther: Minsky
@@ -14,7 +17,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * (2) 打开项目是可能看不到源码,可以在右边侧边 maven projects 栏中  点击"Generata Sources and Update Folders For All Projects" 即可
  */
 @EnableDubbo
+@ImportResource(value = "classpath:service-reference.xml")
 @SpringBootApplication
+@ServletComponentScan
 public class BootConsumerApplication {
 
     public static void main(String[] args){
