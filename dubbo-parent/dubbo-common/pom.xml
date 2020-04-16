@@ -6,7 +6,6 @@
         <groupId>dubbo-springboot-demo</groupId>
         <artifactId>dubbo-parent</artifactId>
         <version>0.0.3-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
     <groupId>dubbo-springboot-demo</groupId>
     <artifactId>dubbo-common</artifactId>
@@ -28,17 +27,15 @@
             <artifactId>fastjson</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>dubbo-springboot-demo</groupId>
-            <artifactId>demo-api</artifactId>
-            <version>${demo.version}</version>
-        </dependency>
-
         <!-- apache common 包 -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.7</version>
+        </dependency>
+        <dependency>
+            <groupId>dubbo-springboot-demo</groupId>
+            <artifactId>dubbo-api</artifactId>
         </dependency>
     </dependencies>
 

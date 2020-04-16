@@ -141,8 +141,7 @@
         <!-- 服务接口定义 -->
         <dependency>
             <groupId>dubbo-springboot-demo</groupId>
-            <artifactId>demo-api</artifactId>
-            <version>${demo.version}</version>
+            <artifactId>dubbo-api</artifactId>
         </dependency>
 
         <!-- 服务端日志打印使用log4j2 -->
