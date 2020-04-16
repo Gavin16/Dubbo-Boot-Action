@@ -8,8 +8,8 @@
     <!--<dubbo:service interface="test.service.UserService"  stub="code.service.impl.UserServiceStub"/>-->
     <dubbo:reference interface="test.service.UserService" version="1.1"/>
 
-    <dubbo:reference interface="demo.dubbo.service.AddressService" version="1.3" />
-    <dubbo:reference interface="demo.dubbo.service.QuestionService" version="1.0" />
-    <dubbo:reference interface="demo.dubbo.service.IdcardService" version="1.3" />
+    <dubbo:reference interface="demo.AddressService" version="1.3" />
+    <dubbo:reference interface="demo.QuestionService" version="1.0" />
+    <dubbo:reference interface="demo.IdcardService" version="1.3" />
 
 </beans>

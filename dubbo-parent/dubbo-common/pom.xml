@@ -29,8 +29,9 @@
         </dependency>
 
         <dependency>
-            <groupId>code.dubbo.forward</groupId>
-            <artifactId>demo.interfaces</artifactId>
+            <groupId>dubbo-springboot-demo</groupId>
+            <artifactId>demo-api</artifactId>
+            <version>${demo.version}</version>
         </dependency>
 
         <!-- apache common 包 -->

@@ -6,7 +6,6 @@
         <groupId>dubbo-springboot-demo</groupId>
         <artifactId>dubbo-parent</artifactId>
         <version>0.0.3-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <groupId>dubbo-springboot-demo</groupId>
@@ -17,6 +16,7 @@
     <properties>
         <java.version>1.8</java.version>
         <dubbo-boot.version>0.2.0</dubbo-boot.version>
+        <demo.version>0.0.3-SNAPSHOT</demo.version>
     </properties>
 
     <dependencies>
@@ -140,8 +140,9 @@
 
         <!-- 服务接口定义 -->
         <dependency>
-            <groupId>code.dubbo.forward</groupId>
-            <artifactId>demo.interfaces</artifactId>
+            <groupId>dubbo-springboot-demo</groupId>
+            <artifactId>demo-api</artifactId>
+            <version>${demo.version}</version>
         </dependency>
 
         <!-- 服务端日志打印使用log4j2 -->

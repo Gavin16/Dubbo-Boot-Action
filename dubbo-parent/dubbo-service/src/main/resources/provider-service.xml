@@ -21,9 +21,9 @@
          同时服务接口颗粒一般都不会太小,因此接口中的方法可能会有自己的单独配置。
          
     -->
-    <dubbo:service interface="demo.dubbo.service.LoginService" ref="loginService" version="1.0"/>
+    <dubbo:service interface="demo.LoginService" ref="loginService" version="1.0"/>
 
-    <dubbo:service version="1.3" interface="demo.dubbo.service.IdcardService" ref="idcardService" cluster="failfast" loadbalance="roundrobin">
+    <dubbo:service version="1.3" interface="demo.IdcardService" ref="idcardService" cluster="failfast" loadbalance="roundrobin">
         <!-- parseIdcard 方法如果是failover策略(调用集群中某个节点失败) 还会再重试 retries 次 -->
         <dubbo:method name="parseIdcard" retries="2"  timeout="3000"/>
     </dubbo:service>
@@ -34,11 +34,11 @@
         因为服务提供端会将自己的配置发送到注册中心, 消费端可以从注册中心拿到该配置，所以即使按配置覆盖顺序来,生效的是服务端的timeout的配置
         仍然可以在consumer端获取到
     -->
-    <dubbo:service version="1.3" interface="demo.dubbo.service.AddressService" ref="addressService" cluster="failfast" loadbalance="random">
+    <dubbo:service version="1.3" interface="demo.AddressService" ref="addressService" cluster="failfast" loadbalance="random">
         <dubbo:method name="parseAddress" timeout="5000"/>
     </dubbo:service>
     
-    <dubbo:service interface="demo.dubbo.service.QuestionService" ref="questionService" version="1.0" >
+    <dubbo:service interface="demo.QuestionService" ref="questionService" version="1.0" >
     </dubbo:service>
 
     <dubbo:service interface="test.service.UserService" ref="userService" version="1.1"/>

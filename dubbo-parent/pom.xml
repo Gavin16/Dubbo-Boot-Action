@@ -21,6 +21,7 @@
         <module>dubbo-manager</module>
         <module>dubbo-service</module>
         <module>dubbo-common</module>
+        <module>dubbo-api</module>
     </modules>
 
     <!-- 属性定义 -->
@@ -58,12 +59,6 @@
                 <artifactId>lombok</artifactId>
                 <version>1.18.4</version>
                 <scope>provided</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>code.dubbo.forward</groupId>
-                <artifactId>demo.interfaces</artifactId>
-                <version>${service.version}</version>
             </dependency>
 
             <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
