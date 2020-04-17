@@ -10,8 +10,8 @@ spring:
     type: com.zaxxer.hikari.HikariDataSource
 
     hikari:
-      minimum-idle: 5
-      maximum-pool-size: 30
+      minimum-idle: 3
+      maximum-pool-size: 10
       auto-commit: true
       connection-test-query: select 1
       connection-timeout: 30000

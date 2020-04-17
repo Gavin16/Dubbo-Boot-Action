@@ -138,4 +138,25 @@
         </plugins>
     </build>
 
+    <profiles>
+        <profile>
+            <id>local</id>
+            <properties>
+                <package.environment>local</package.environment>
+                <war.name>dubbo-container</war.name>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+
+        <profile>
+            <id>test</id>
+            <properties>
+                <package.environment>test</package.environment>
+                <war.name>dubbo-container</war.name>
+            </properties>
+        </profile>
+    </profiles>
+
 </project>

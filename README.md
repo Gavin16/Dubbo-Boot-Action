@@ -29,6 +29,8 @@ Springboot 整合 Dubbo 多模块项目 DEMO
 数据库：
 mysql主从模式
 
+docker镜像文件
+阿里与加速器地址：
 
 
 
