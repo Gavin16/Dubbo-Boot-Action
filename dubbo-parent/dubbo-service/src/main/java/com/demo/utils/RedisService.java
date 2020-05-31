@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisSentinelPool;
+import redis.clients.jedis.JedisPool;
 
 import java.util.List;
 import java.util.Map;
@@ -16,7 +16,7 @@ public class RedisService {
     private static final Logger logger = LoggerFactory.getLogger(RedisService.class);
 
     @Autowired
-    private JedisSentinelPool jedisSentinelPool;
+    private JedisPool jedisPool;
 
 
     /**
@@ -29,7 +29,7 @@ public class RedisService {
         Jedis jedis = null;
         try {
             if(time>0){
-                jedis = jedisSentinelPool.getResource();
+                jedis = jedisPool.getResource();
                 jedis.expire(key, (int) time);
             }
             return true;
@@ -51,7 +51,7 @@ public class RedisService {
     public long getExpire(String key){
         Jedis jedis = null;
         try {
-            jedis = jedisSentinelPool.getResource();
+            jedis = jedisPool.getResource();
             return jedis.ttl(key);
         } catch (Exception e) {
             logger.error("RedisService--getExpire--执行异常:{}",e);
@@ -71,7 +71,7 @@ public class RedisService {
     public Boolean hasKey(String key){
         Jedis jedis = null;
         try {
-            jedis = jedisSentinelPool.getResource();
+            jedis = jedisPool.getResource();
             return jedis.exists(key);
         } catch (Exception e) {
             logger.error("RedisService--hasKey--执行异常:{}",e);
@@ -92,7 +92,7 @@ public class RedisService {
     public Boolean strictHasKey(String key){
         Jedis jedis = null;
         try {
-            jedis = jedisSentinelPool.getResource();
+            jedis = jedisPool.getResource();
             return jedis.exists(key);
         } catch (Exception e) {
             logger.error("RedisService--strictHasKey--执行异常:{}",e);
@@ -112,7 +112,7 @@ public class RedisService {
         Jedis jedis = null;
 
         try {
-            jedis = jedisSentinelPool.getResource();
+            jedis = jedisPool.getResource();
             jedis.del(key);
         } catch (Exception e) {
             logger.error("RedisService--del--执行异常:{}",e);
@@ -133,7 +133,7 @@ public class RedisService {
     public String get(String key){
         Jedis jedis = null;
         try {
-            jedis = jedisSentinelPool.getResource();
+            jedis = jedisPool.getResource();
             return jedis.get(key);
         } catch (Exception e) {
             logger.error("RedisService--get--执行异常:{}",e);
@@ -154,7 +154,7 @@ public class RedisService {
     public Boolean set(String key,String value) {
         Jedis jedis = null;
         try {
-            jedis = jedisSentinelPool.getResource();
+            jedis = jedisPool.getResource();
             jedis.set(key,value);
             return true;
         } catch (Exception e) {
@@ -179,7 +179,7 @@ public class RedisService {
         Jedis jedis = null;
         try {
             if(time>0){
-                jedis = jedisSentinelPool.getResource();
+                jedis = jedisPool.getResource();
                 jedis.setex(key, time, value);
             }else{
                 jedis.set(key, value);
@@ -207,7 +207,7 @@ public class RedisService {
             if(delta<0){
                 return null;
             }
-            jedis = jedisSentinelPool.getResource();
+            jedis = jedisPool.getResource();
             return jedis.incrBy(key, delta);
         } catch (Exception e) {
             logger.error("RedisService--incr--执行异常:{}", e);
@@ -234,7 +234,7 @@ public class RedisService {
             if(delta<0){
                 return null;
             }
-            jedis = jedisSentinelPool.getResource();
+            jedis = jedisPool.getResource();
             return jedis.decrBy(key, delta);
         } catch (Exception e) {
             logger.error("RedisService--incr--执行异常:{}", e);
@@ -255,7 +255,7 @@ public class RedisService {
     public String hget(String key,String field){
         Jedis jedis = null;
         try {
-            jedis = jedisSentinelPool.getResource();
+            jedis = jedisPool.getResource();
             return jedis.hget(key, field);
         } catch (Exception e) {
             logger.error("RedisService--hget--执行异常:{}", e);
@@ -277,7 +277,7 @@ public class RedisService {
     public Boolean hset(String key,String field,String value) {
         Jedis jedis = null;
         try {
-            jedis = jedisSentinelPool.getResource();
+            jedis = jedisPool.getResource();
             jedis.hset(key, field,value);
             return true;
         } catch (Exception e) {
@@ -301,7 +301,7 @@ public class RedisService {
     public boolean hset(String key,String field,String value,int time) {
         Jedis jedis = null;
         try {
-            jedis = jedisSentinelPool.getResource();
+            jedis = jedisPool.getResource();
             jedis.hset(key, field, value);
             if(time>0){
                 jedis.expire(key, time);
@@ -327,7 +327,7 @@ public class RedisService {
     public List<String> hmget(String key, String ... fields){
         Jedis jedis = null;
         try {
-            jedis = jedisSentinelPool.getResource();
+            jedis = jedisPool.getResource();
             return jedis.hmget(key, fields);
         } catch (Exception e) {
             logger.error("RedisService--hmget--执行异常:{}", e);
@@ -348,7 +348,7 @@ public class RedisService {
     public Boolean hmset(String key, Map<String,String> map){
         Jedis jedis = null;
         try {
-            jedis = jedisSentinelPool.getResource();
+            jedis = jedisPool.getResource();
             jedis.hmset(key, map);
             return true;
         } catch (Exception e) {
@@ -371,7 +371,7 @@ public class RedisService {
     public Boolean hmset(String key, Map<String,String> map, int time){
         Jedis jedis = null;
         try {
-            jedis = jedisSentinelPool.getResource();
+            jedis = jedisPool.getResource();
             jedis.hmset(key, map);
             if(time > 0){
                 jedis.expire(key, time);
@@ -398,7 +398,7 @@ public class RedisService {
     public void hdel(String key, String... fields){
         Jedis jedis = null;
         try {
-            jedis = jedisSentinelPool.getResource();
+            jedis = jedisPool.getResource();
             jedis.hdel(key, fields);
         } catch (Exception e) {
             logger.error("RedisService--hdel--执行异常:{}", e);
@@ -418,7 +418,7 @@ public class RedisService {
     public Boolean hHasKey(String key, String field){
         Jedis jedis = null;
         try {
-            jedis = jedisSentinelPool.getResource();
+            jedis = jedisPool.getResource();
             return jedis.hexists(key, field);
         } catch (Exception e) {
             logger.error("RedisService--hHasKey--执行异常:{}", e);
@@ -440,7 +440,7 @@ public class RedisService {
     public Long hincr(String key, String field, long by){
         Jedis jedis = null;
         try {
-            jedis = jedisSentinelPool.getResource();
+            jedis = jedisPool.getResource();
             return jedis.hincrBy(key, field, by);
         } catch (Exception e) {
             logger.error("RedisService--hincr--执行异常:{}", e);
@@ -465,7 +465,7 @@ public class RedisService {
     public Long sAdd(String key, String... members){
         Jedis jedis = null;
         try {
-            jedis = jedisSentinelPool.getResource();
+            jedis = jedisPool.getResource();
             return jedis.sadd(key, members);
         } catch (Exception e) {
             logger.error("RedisService--setAdd--执行异常:{}", e);
@@ -485,7 +485,7 @@ public class RedisService {
     public String sPop(String key){
         Jedis jedis = null;
         try {
-            jedis = jedisSentinelPool.getResource();
+            jedis = jedisPool.getResource();
             return jedis.spop(key);
         } catch (Exception e) {
             logger.error("RedisService--sPop--执行异常:{}", e);
@@ -505,7 +505,7 @@ public class RedisService {
     public Long scard(String key){
         Jedis jedis = null;
         try {
-            jedis = jedisSentinelPool.getResource();
+            jedis = jedisPool.getResource();
             return jedis.scard(key);
         } catch (Exception e) {
             logger.error("RedisService--scard--执行异常:{}", e);
@@ -525,7 +525,7 @@ public class RedisService {
     public String sRandMember(String key){
         Jedis jedis = null;
         try {
-            jedis = jedisSentinelPool.getResource();
+            jedis = jedisPool.getResource();
             return jedis.srandmember(key);
         } catch (Exception e) {
             logger.error("RedisService--sRandMember--执行异常:{}", e);
@@ -545,7 +545,7 @@ public class RedisService {
     public Long srem(String key,String ... members){
         Jedis jedis = null;
         try {
-            jedis = jedisSentinelPool.getResource();
+            jedis = jedisPool.getResource();
             return jedis.srem(key, members);
         } catch (Exception e) {
             logger.error("RedisService--srem--执行异常:{}", e);

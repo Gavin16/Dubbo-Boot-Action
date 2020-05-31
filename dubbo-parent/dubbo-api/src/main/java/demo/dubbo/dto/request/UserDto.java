@@ -2,7 +2,6 @@ package demo.dubbo.dto.request;
 
 import lombok.Data;
 
-import javax.validation.constraints.NotNull;
 
 /**
  * @Class: UserDto
@@ -17,12 +16,10 @@ public class UserDto {
     private int id;
 
     /** 登录用户名 */
-    @NotNull(message = "登录名不能为空")
     private String loginName;
 
     private String userName;
 
-    @NotNull(message = "登录密码不能为空")
     private String userPassword;
 
     private int userType;

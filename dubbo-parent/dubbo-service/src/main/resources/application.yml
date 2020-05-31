@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: @package.environment@
+    active: dao,core,dubbo,kafka
 
 
 

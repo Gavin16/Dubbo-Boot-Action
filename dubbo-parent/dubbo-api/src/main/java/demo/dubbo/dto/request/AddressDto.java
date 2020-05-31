@@ -1,11 +1,9 @@
 package demo.dubbo.dto.request;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 public class AddressDto implements Serializable {
 
-    @NotNull(message = "地址不能为空")
     private String address;
 
     private String city;

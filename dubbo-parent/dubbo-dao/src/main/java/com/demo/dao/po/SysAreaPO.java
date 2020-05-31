@@ -1,6 +1,7 @@
 package com.demo.dao.po;
 
 import lombok.Data;
+import org.apache.ibatis.type.Alias;
 
 import java.io.Serializable;
 
@@ -10,6 +11,7 @@ import java.io.Serializable;
  * 因此需要实现 Serializable 接口
  */
 @Data
+@Alias("SysAreaPO")
 public class SysAreaPO implements Serializable {
     private Integer id;
     private String province;

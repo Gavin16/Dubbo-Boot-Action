@@ -20,7 +20,7 @@
 
     <cache></cache>
 
-    <resultMap id="SysAreaResultMap" type="com.demo.dao.po.SysAreaPO">
+    <resultMap id="SysAreaResultMap" type="SysAreaPO">
         <result property="province" column="province"/>
         <result property="city" column="city"/>
         <result property="district" column="district"/>

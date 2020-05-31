@@ -1,11 +1,9 @@
 package demo.dubbo.dto.response;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 public class QuestionOptionDto implements Serializable {
 
-    @NotNull(message = "面试题文件路径不能为空")
     private String path;
 
     private String source;
