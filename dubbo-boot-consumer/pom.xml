@@ -9,7 +9,7 @@
     <version>0.0.3-SNAPSHOT</version>
 
     <properties>
-        <spring-boot.version>2.1.3.RELEASE</spring-boot.version>
+        <spring-boot.version>2.5.12</spring-boot.version>
         <dubbo.spring-boot.version>0.2.0</dubbo.spring-boot.version>
         <demo.version>0.0.3-SNAPSHOT</demo.version>
     </properties>
